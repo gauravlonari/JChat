@@ -13,13 +13,6 @@ class Server {
 
     public static void main(String args[]){
         Server server=new Server();
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-            @Override
-            public void run() {
-                server.closeServer();
-                // System.out.println("Server Close Init");
-            }
-        }));
     }
 
     String getLocalAddress(){
@@ -71,6 +64,15 @@ class Server {
         running.start();
         System.out.println("Server Started on "+selfAddress);
         scan.close();
+
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            @Override
+            public void run() {
+                closeServer();
+                // System.out.println("Server Close Init");
+            }
+        }));
+
     }
 
     void doOperations(Socket current){

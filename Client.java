@@ -22,14 +22,7 @@ class Client extends JFrame {
     ArrayList<ClientDetails> clientList;
 
     public static void main(String[] args) {
-        Client client=new Client();
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-            @Override
-            public void run() {
-                client.closeClient();
-                // System.out.println("Client Close Init");
-            }
-        }));
+        new Client();
     }
 
     String getLocalAddress(){
@@ -103,6 +96,14 @@ class Client extends JFrame {
             receiving.start();
         }
         scan.close();
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            @Override
+            public void run() {
+                closeClient();
+                // System.out.println("Client Close Init");
+            }
+        }));
+
     }
 
     void doOperations(Socket current){
