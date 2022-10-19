@@ -123,10 +123,12 @@ class Server {
                 case 2:
                     clientList.remove(data.getRemoveLocation());
                     data.setClientList(clientList);
+                    data.setStatus(1);
                     updateClients(data);
                     System.out.println("Client Removed: "+cd.getName()+" ("+cd.getAddress()+")");
                     break;
                 default: System.out.println("Status Issue");
+                break;
             }
             // System.out.println("after switch");
         }catch(Exception e){

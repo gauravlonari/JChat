@@ -20,6 +20,7 @@ class Client extends JFrame {
     transient Thread receiving;
     transient ServerSocket rs;
     ArrayList<ClientDetails> clientList;
+    boolean selfChat=false;
 
     public static void main(String[] args) {
         new Client();
@@ -127,9 +128,11 @@ class Client extends JFrame {
     void updateClients(){
         clients.removeAllItems();
         for(ClientDetails c:clientList){
-            // if(c.getName().equals(clientDetails.getName()))
-            //     continue;
-            clients.addItem(c.getName());
+
+            if(c.getName().equals(clientDetails.getName()) && !selfChat)
+                continue;
+            
+                clients.addItem(c.getName());
         }
     }
     boolean initilizeConnection(){
@@ -244,7 +247,11 @@ class Client extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
     void sendMsg(String text,int toIndex){
-        ClientDetails c=clientList.get(toIndex);
+        ClientDetails c;
+        if(!selfChat && toIndex>=clientList.indexOf(clientDetails))
+            c=clientList.get(toIndex+1);
+        else
+            c=clientList.get(toIndex);
         try{
             Data d=new Data();
             d.setStatus(0);
